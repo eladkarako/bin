@@ -1,0 +1,19 @@
+26.8.20.2020
+* css - renaming statusbar to urlbar, moving it above the iframe ("preview"), and making it react to keyup as a secondary updating of the iframe .src, so overall there are two ways of effecting the iframe, one is the text-editor, keyup generates a data: base64 of the text as is, second way is putting whatever in the "urlbar", it can be escaped-SVG or external url. note: page and iframe are very permissive, allowing many features and removing many restrictions for development sake.
+* css - trying not to apply any background color to the iframe, to prevent it from inheriting dark or light color-scheme specifically. it is still isn't perfect. refresh can sometimes prevent it from dark-theme (as the state is loaded from local storage and applied via checkbox checked status) - so it either a bug or a feature. I tried few "fixes" but none worked, eventually I just settled so if unchecked/checked few times you can apply dark theme to the iframe, and if refreshed, it will probably won't apply the theme to the iframe.
+* css - reducing the size of the mimetype.
+* html - removing prefetch-src as it is no longer being used.
+* html - reducing button's width by using text-based emoji-s.
+* html - hiding actual input-checkbox, and using the label with checked-unchecked look-like text, all key binding is done by HTML using input 'id' and label 'for'.
+* html - adding 'title' attribute to some buttons, as few are now just described with emoji-s.
+* html - the statusbar to urlbar, and moving it to its logical location before the iframe.
+* html - removing 'allowfullscreen' as it is old, and now being used with part of 'allow='
++ js - saving state of dark mode, and line wrap in localstorage and loading it up when page loads up.
++ js - adding implementation of modern base64 encode/decode.
++ js - adding setting value for content-editable editor that supports browser's native undo. note: the "urlbar" is also a contenteditable but for it I just set the textContent.
++ js - storing last encoded value. it is used to prevent setting iframe's .src if not needed.
++ js - storing last encoded value, as it is already ASCII safe, storing it as is in local storage is fine. value is restored when page loads up, and urlbar and iframe .src are updated as if a keyup event fired.
++ js - including special case, empty content in the editor also clears up the local storage entry for last encoded, the local variable, and sets the iframe to about:blank, it is helpful in cases of continues work making RAM consumption too high.
+
+26.8.20.1247
++ initial. basic HTML structure.

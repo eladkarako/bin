@@ -20,15 +20,15 @@ html,body{
   outline       : 1px none transparent;
 }
 
-[id="toolbar"]{   position:absolute;  top: 0vh;  left: 0vw;  width:100vw;  height:10vh;}
-[id="editor"]{    position:absolute;  top:10vh;  left: 0vw;  width: 50vw;  height:80vh;}
-[id="preview"]{   position:absolute;  top:10vh;  left:50vw;  width: 50vw;  height:80vh;}
-[id="statusbar"]{ position:absolute;  top:90vh;  left: 0vw;  width:100vw;  height:10vh;}
+[id="toolbar"]{ position:absolute;  top: 0vh;  left: 0vw;  width:100vw;  height:10vh;}
+[id="editor"]{  position:absolute;  top:10vh;  left: 0vw;  width: 50vw;  height:90vh;}
+[id="urlbar"]{  position:absolute;  top:10vh;  left:50vw;  width: 50vw;  height:10vh;}
+[id="preview"]{ position:absolute;  top:20vh;  left:50vw;  width: 50vw;  height:80vh;}
 
-[id="editor"],[id="preview"]{    overflow:scroll; }
-[id="toolbar"],[id="statusbar"]{ overflow:hidden; }
+[id="editor"],[id="preview"]{ overflow:scroll; }
+[id="toolbar"],[id="urlbar"]{ overflow:hidden; }
 
-[id="toolbar"],[id="statusbar"]{ 
+[id="toolbar"],[id="urlbar"]{ 
   text-align    : center;
   align-content : center; 
   line-height   : 1.5vw;
@@ -62,7 +62,7 @@ input[type="checkbox"]:checked + label::before{ display:inline-block;  color: va
   --workspace-background     : rgb(244, 247, 250);
   --editor-background        : rgb(232, 240, 247);
   --preview-background       : rgb(250, 252, 253);
-  --statusbar-background     : rgb(224, 232, 240);
+  --urlbar-background        : rgb(224, 232, 240);
   --border                   : rgb(116, 143, 166);
   --soft-border              : rgb(190, 207, 220);
   --text                     : rgb(35, 58, 76);
@@ -81,7 +81,7 @@ input[type="checkbox"]:checked + label::before{ display:inline-block;  color: va
   --workspace-background     : rgb(27, 38, 54);
   --editor-background        : rgb(31, 45, 63);
   --preview-background       : rgb(42, 56, 74);
-  --statusbar-background     : rgb(32, 45, 62);
+  --urlbar-background        : rgb(32, 45, 62);
   --border                   : rgb(83, 108, 135);
   --soft-border              : rgb(58, 79, 103);
   --text                     : rgb(211, 224, 235);
@@ -98,13 +98,21 @@ input[type="checkbox"]:checked + label::before{ display:inline-block;  color: va
 body{               background-color: transparent;                     color: inherit;                                  }
 [id="toolbar"]{     background-color: var(--toolbar-background);                                                        }
 [id="editor"]{      background-color: var(--editor-background);        color: var(--text); caret-color: var(--accent);  }
+/*
 [id="preview"]{     background-color: var(--preview-background);                                                        }
-[id="statusbar"]{   background-color: var(--statusbar-background);     color: var(--muted-text);                        }
+*/
+[id="urlbar"]{      background-color: var(--urlbar-background);        color: var(--muted-text);                        }
 button{             background-color: var(--button-background);        color: var(--text);                              }
 button:hover{       background-color: var(--button-hover-background);  color: var(--accent);                            }
 button:active{      background-color: var(--button-active-background); color: var(--highlight);                         }
-button:focus-visible{  outline-color: var(--accent);                                                                       }
+button:focus-visible{  outline-color: var(--accent);                                                                    }
+
+
 
 
 [opener],[downloader]{display:none;} /* elements used for opening file/downloading file. */
 
+[id="input_mimetype"]{ 
+  text-align : center;
+  width      : 12vw; 
+}

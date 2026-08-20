@@ -9,9 +9,9 @@
 <!-- _________________________________________________________________________________________________ -->
 <meta type="image/png"       content="favicon.png" property="og:image" />
 <link type="image/x-icon"    href="favicon.ico"    rel="shortcut icon" />
-<link type="text/javascript" href="index.js"    rel="preload"    charset="UTF-8" as="script" />
-<link type="text/css"        href="index.css"   rel="preload"    charset="UTF-8" as="style"  />
-<link type="text/css"        href="index.css"   rel="stylesheet" charset="UTF-8" media="all" />
+<link type="text/javascript" href="index.js"       rel="preload"     charset="UTF-8" as="script" />
+<link type="text/css"        href="index.css"      rel="preload"     charset="UTF-8" as="style"  />
+<link type="text/css"        href="index.css"      rel="stylesheet"  charset="UTF-8" media="all" />
 <!-- _________________________________________________________________________________________________ -->
 <meta http-equiv="X-XSS-Protection" content="0" />
 <!-- _________________________________________________________________________________________________ -->
@@ -20,7 +20,6 @@ default-src     * data: blob: filesystem: 'unsafe-inline' 'unsafe-eval' 'unsafe-
 script-src      * data: blob: filesystem: 'unsafe-inline' 'unsafe-eval' 'unsafe-hashes'; 
 style-src       * data: blob: filesystem: 'unsafe-inline' 'unsafe-hashes'; 
 child-src       * data: blob:; 
-prefetch-src    *; 
 script-src-elem * data: blob: 'unsafe-inline'; 
 script-src-attr * 'unsafe-inline'; 
 style-src-elem  * data: blob: 'unsafe-inline'; 
@@ -103,24 +102,27 @@ xr-spatial-tracking *;
 <body id="body">
 <!-- _________________________________________________________________________________________________ -->
 <div id="toolbar">
-  <input id="btn_dark_mode" type="checkbox"         /><label id="label_dark_mode" for="btn_dark_mode">dark mode</label>
+  <input id="btn_dark_mode" type="checkbox"         /><label id="label_dark_mode" for="btn_dark_mode" title="enable/disable dark-mode">&#x1F31B;&#xFE0E;</label>
   | 
-  <input id="btn_text_wrap" type="checkbox" checked /><label id="label_text_wrap" for="btn_text_wrap">text wrap</label>
+  <input id="btn_text_wrap" type="checkbox" checked /><label id="label_text_wrap" for="btn_text_wrap" title="visually wrap the lines in the text-editor, easier to read without scrolling.">&#x1F4C3;&#xFE0E;&#x21A9;&#xFE0E;</label>
   | 
-  <button id="btn_text_open">text_open</button> 
-  <button id="btn_text_save_as">text_save_as</button> 
+  <input id="input_mimetype" type="text" value="text/html" placeholder="text/html" title="used by data: url - for the iframe, you can specify anything." />
+  |
+  <button id="btn_text_open"      title="📂︎︎ open a text file from your computer, and read it directly into the editor.">&#x1F4C2;&#xFE0E;</button> 
+  <button id="btn_text_save_as"   title="💾︎︎ save the content of the editor as is to a file.">&#x1F4BE;&#xFE0E;</button> 
   | 
-  <button id="btn_base64_save_as">base64_save_as</button> 
-  <button id="btn_base64_save_as">base64_save_as</button>
+  <button id="btn_base64_open"    title="📂︎︎ open a text file that has the base64 content of the text, decode it (ignoring data:, mimetype etc..), and put the plain text into the editor.">&#x1F4C2;&#xFE0E; b64</button> 
+  <button id="btn_base64_save_as" title="💾︎︎ encode the content of the editor to base64, then save it to file. including data: and mimetype, making it a complete url.">&#x1F4BE;&#xFE0E; b64</button> 
 </div>
 <!-- _________________________________________________________________________________________________ -->
-<div id="editor" contenteditable="plaintext-only" spellcheck="true" autofocus spellcheck="true" autocapitalize="off" autocorrect="off"></div>
+<div id="editor" contenteditable="plaintext-only" autofocus spellcheck="true" autocomplete="off" autocapitalize="off" autocorrect="off"></div>
+<!-- _________________________________________________________________________________________________ -->
+<div id="urlbar" contenteditable="plaintext-only" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off"></div>
 <!-- _________________________________________________________________________________________________ -->
 <iframe id="preview" 
 loading="eager" 
 sandbox="allow-downloads allow-scripts allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-same-origin allow-storage-access-by-user-activation allow-top-navigation allow-top-navigation-by-user-activation allow-top-navigation-to-custom-protocols" src="about:blank" marginheight="0" marginwidth="0" scrolling="yes"
 referrerpolicy="unsafe-url" 
-allowfullscreen 
 allow="
 accelerometer *;
 ambient-light-sensor *;
@@ -186,8 +188,6 @@ web-share *;
 window-management *;
 xr-spatial-tracking *;
 "></iframe>
-<!-- _________________________________________________________________________________________________ -->
-<div id="statusbar"></div>
 <!-- _________________________________________________________________________________________________ -->
 <script defer type="text/javascript" charset="UTF-8" loading="eager" lazyload="off" src="index.js"></script>
 <!-- _________________________________________________________________________________________________ -->
