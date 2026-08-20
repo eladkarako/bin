@@ -104,3 +104,7 @@ button{             background-color: var(--button-background);        color: va
 button:hover{       background-color: var(--button-hover-background);  color: var(--accent);                            }
 button:active{      background-color: var(--button-active-background); color: var(--highlight);                         }
 button:focus-visible{  outline-color: var(--accent);                                                                       }
+
+
+[opener],[downloader]{display:none;} /* elements used for opening file/downloading file. */
+
