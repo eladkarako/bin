@@ -1,4 +1,4 @@
-### BIN
+<h3><img src="favicon.png" /> BIN</h3>
 
 <hr/>
 
