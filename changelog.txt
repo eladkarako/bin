@@ -1,3 +1,9 @@
+26.8.20.2335
+* adding focus-without-user-activation, but also putting blur and focus in try/catch.
+* putting execute command alternative.
+* encode_text_from_editor_and_set_iframe_src_to_date_url handles most of the action, including storage and encoding, as well as "releasing" the keyup throttle flag, from within an async method from within the event-handle.
+* using modern event handlers for checkbox state store.
+
 26.8.20.2020
 * css - renaming statusbar to urlbar, moving it above the iframe ("preview"), and making it react to keyup as a secondary updating of the iframe .src, so overall there are two ways of effecting the iframe, one is the text-editor, keyup generates a data: base64 of the text as is, second way is putting whatever in the "urlbar", it can be escaped-SVG or external url. note: page and iframe are very permissive, allowing many features and removing many restrictions for development sake.
 * css - trying not to apply any background color to the iframe, to prevent it from inheriting dark or light color-scheme specifically. it is still isn't perfect. refresh can sometimes prevent it from dark-theme (as the state is loaded from local storage and applied via checkbox checked status) - so it either a bug or a feature. I tried few "fixes" but none worked, eventually I just settled so if unchecked/checked few times you can apply dark theme to the iframe, and if refreshed, it will probably won't apply the theme to the iframe.

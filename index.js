@@ -133,14 +133,16 @@ const btn_dark_mode      = document.querySelector('[id="btn_dark_mode"]')
 
 
 const set_editor_value = (text)=>{
-  editor.blur();
-  editor.focus();
+  try{editor.blur();}catch(err){}
+  try{editor.focus();}catch(err){}
   editor.textContent = "";
   try{
-    self.document.execCommand("insertText", false, text);
-  }catch(err){}
+    self.document.execCommand("insertText", false, text); //allow native browser's UNDO.
+  }catch(err){
+    editor.textContent = text;
+  }
   editor.scrollTo(0,0);
-  editor.focus();
+  try{editor.focus();}catch(err){}
 };
 
 
@@ -157,31 +159,35 @@ const encode_text_from_editor_and_set_iframe_src_to_date_url = (event)=>{
   if(true === is_busy_keyup){ return true; }
   is_busy_keyup = true;
 
-  const text          = editor.textContent || "";
+  (async ()=>{
+    const text          = editor.textContent || "";
 
-  if("" === text){  //special case, cleanup.
-    last_encoded       = "";
-    urlbar.textContent = "about:blank";
-    preview.src        = "about:blank";
-    try{ localStorage.removeItem("last_encoded");              }catch (err){}
+    if("" === text){  //special case, cleanup.
+      last_encoded       = "";
+      urlbar.textContent = "about:blank";
+      preview.src        = "about:blank";
+      try{ localStorage.removeItem("last_encoded");              }catch (err){}
+      is_busy_keyup = false;
+      return true;
+    }
+
+    const mimetype      = input_mimetype.value || "text/html"
+         ,text_encoded  = base64_encode( text )
+         ,url           = "data:" + mimetype + ";base64," + text_encoded
+         ;
+
+    last_encoded       = text_encoded;
+    urlbar.textContent = url;
+    preview.src        = url;
+
+    try{
+      localStorage.setItem("last_encoded", last_encoded);
+    }catch (err){}
+
     is_busy_keyup = false;
-    return true;
-  }
+  })();
 
-  const mimetype      = input_mimetype.value || "text/html"
-       ,text_encoded  = base64_encode( text )
-       ,url           = "data:" + mimetype + ";base64," + text_encoded
-       ;
-
-  last_encoded       = text_encoded;
-  urlbar.textContent = url;
-  preview.src        = url;
-
-  try{
-    localStorage.setItem("last_encoded", last_encoded);
-  }catch (err){}
-
-  is_busy_keyup = false;
+  return true;
 };
 editor.removeEventListener("keyup", encode_text_from_editor_and_set_iframe_src_to_date_url, {capture:false, passive:true, once:false});
 editor.addEventListener(   "keyup", encode_text_from_editor_and_set_iframe_src_to_date_url, {capture:false, passive:true, once:false});
@@ -192,6 +198,7 @@ const urlbar_keyup = (ev)=>{
   const text = urlbar.textContent;
   if(text === last_encoded){ return true; }
   preview.src = text;
+  return true;
 };
 urlbar.removeEventListener("keyup", urlbar_keyup, {capture:false, passive:true, once:false});
 urlbar.addEventListener(   "keyup", urlbar_keyup, {capture:false, passive:true, once:false});
@@ -204,26 +211,36 @@ set_editor_value( base64_decode( last_encoded ) );
 encode_text_from_editor_and_set_iframe_src_to_date_url(); //"fire" the event's callback 
 
 
-btn_dark_mode.onchange = ()=>{ //just store the settings every change.
+
+const btn_dark_mode_change = (ev)=>{ //just store the settings every change.
   try{
     localStorage.setItem("btn_dark_mode__is_checked", String(btn_dark_mode.checked));
   }catch(err){}
+  return true;
 };
+btn_dark_mode.removeEventListener("change", btn_dark_mode_change, {capture:false, passive:true, once:false});
+btn_dark_mode.addEventListener(   "change", btn_dark_mode_change, {capture:false, passive:true, once:false});
 
 try{ //one time when page loads up, try restore last state.
   btn_dark_mode.checked = ("true" === (localStorage.getItem("btn_dark_mode__is_checked") || "false"));
 }catch(err){}
 
 
-btn_text_wrap.onchange = ()=>{ //just store the settings every change.
+
+const btn_text_wrap_change = (ev)=>{ //just store the settings every change.
   try{
     localStorage.setItem("btn_text_wrap__is_checked", String(btn_text_wrap.checked));
   }catch(err){}
+  return true;
 };
+btn_text_wrap.removeEventListener("change", btn_text_wrap_change, {capture:false, passive:true, once:false});
+btn_text_wrap.addEventListener(   "change", btn_text_wrap_change, {capture:false, passive:true, once:false});
 
 try{ //one time when page loads up, try restore last state.
   btn_text_wrap.checked = ("true" === (localStorage.getItem("btn_text_wrap__is_checked") || "false"));
 }catch(err){}
+
+
 
 
 
