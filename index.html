@@ -1,0 +1,191 @@
+<!doctype html>
+<html encoding="UTF-8" charset="UTF-8" dir="ltr" lang="en-US" xml:lang="en-US" language="English" itemscope="" itemtype="http://schema.org/WebPage" prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="content-type"        content="text/html;charset=UTF-8"       />
+<meta http-equiv="Content-Script-Type" content="text/javascript;charset=UTF-8" />
+<meta http-equiv="Content-Style-Type"  content="text/css;charset=UTF-8"        />
+<meta id="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui"/>
+<!-- _________________________________________________________________________________________________ -->
+<link type="image/x-icon"    href="favicon.ico" rel="shortcut icon" />
+<link type="text/javascript" href="index.js"    rel="preload"    charset="UTF-8" as="script" />
+<link type="text/css"        href="index.css"   rel="preload"    charset="UTF-8" as="style"  />
+<link type="text/css"        href="index.css"   rel="stylesheet" charset="UTF-8" media="all" />
+<!-- _________________________________________________________________________________________________ -->
+<meta http-equiv="X-XSS-Protection" content="0" />
+<!-- _________________________________________________________________________________________________ -->
+<meta http-equiv="Content-Security-Policy" content="
+default-src     * data: blob: filesystem: 'unsafe-inline' 'unsafe-eval' 'unsafe-hashes'; 
+script-src      * data: blob: filesystem: 'unsafe-inline' 'unsafe-eval' 'unsafe-hashes'; 
+style-src       * data: blob: filesystem: 'unsafe-inline' 'unsafe-hashes'; 
+child-src       * data: blob:; 
+prefetch-src    *; 
+script-src-elem * data: blob: 'unsafe-inline'; 
+script-src-attr * 'unsafe-inline'; 
+style-src-elem  * data: blob: 'unsafe-inline'; 
+style-src-attr  * 'unsafe-inline'; 
+base-uri        *; 
+form-action     *; 
+" />
+<!-- _________________________________________________________________________________________________ -->
+<meta http-equiv="Feature-Policy" content="
+accelerometer *;
+ambient-light-sensor *;
+aria-notify *;
+attribution-reporting *;
+autoplay *;
+battery *;
+bluetooth *;
+browsing-topics *;
+camera *;
+captured-surface-control *;
+ch-ua-high-entropy-values *;
+compute-pressure *;
+cross-origin-isolated *;
+deferred-fetch *;
+deferred-fetch-minimal *;
+display-capture *;
+document-domain *;
+encrypted-media *;
+execution-while-not-rendered *;
+execution-while-out-of-viewport *;
+fullscreen *;
+gamepad *;
+geolocation *;
+gyroscope *;
+hid *;
+identity-credentials-get *;
+idle-detection *;
+language-detector *;
+language-model *;
+layout-animations *;
+local-fonts *;
+local-network *;
+local-network-access *;
+loopback-network *;
+magnetometer *;
+microphone *;
+midi *;
+navigation-override *;
+on-device-speech-recognition *;
+otp-credentials *;
+oversized-images *;
+payment *;
+picture-in-picture *;
+private-state-token-issuance *;
+private-state-token-redemption *;
+publickey-credentials-create *;
+publickey-credentials-get *;
+screen-wake-lock *;
+serial *;
+speaker-selection *;
+storage-access *;
+summarizer *;
+sync-script *;
+sync-xhr *;
+translator *;
+unoptimized-images *;
+unsized-media *;
+usb *;
+vibrate *;
+wake-lock *;
+web-share *;
+window-management *;
+xr-spatial-tracking *;
+" />
+<!-- _________________________________________________________________________________________________ -->
+<title>bin</title>
+</head>
+<body id="body">
+<!-- _________________________________________________________________________________________________ -->
+<div id="toolbar">
+  <input id="btn_dark_mode" type="checkbox" /><label id="label_dark_mode" for="btn_dark_mode">dark mode</label>
+  | 
+  <input id="btn_text_wrap" type="checkbox" /><label id="label_text_wrap" for="btn_text_wrap">text wrap</label>
+  | 
+  <button id="btn_text_open">text_open</button> 
+  <button id="btn_text_save_as">text_save_as</button> 
+  | 
+  <button id="btn_base64_save_as">base64_save_as</button> 
+  <button id="btn_base64_save_as">base64_save_as</button>
+</div>
+<!-- _________________________________________________________________________________________________ -->
+<div id="editor" contenteditable="plaintext-only" spellcheck="true" autofocus spellcheck="true" autocapitalize="off" autocorrect="off"></div>
+<!-- _________________________________________________________________________________________________ -->
+<iframe id="preview" 
+loading="eager" 
+sandbox="allow-downloads allow-scripts allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-same-origin allow-storage-access-by-user-activation allow-top-navigation allow-top-navigation-by-user-activation allow-top-navigation-to-custom-protocols" src="about:blank" marginheight="0" marginwidth="0" scrolling="yes"
+referrerpolicy="unsafe-url" 
+allowfullscreen 
+allow="
+accelerometer *;
+ambient-light-sensor *;
+aria-notify *;
+attribution-reporting *;
+autoplay *;
+battery *;
+bluetooth *;
+browsing-topics *;
+camera *;
+captured-surface-control *;
+ch-ua-high-entropy-values *;
+compute-pressure *;
+cross-origin-isolated *;
+deferred-fetch *;
+deferred-fetch-minimal *;
+display-capture *;
+document-domain *;
+encrypted-media *;
+execution-while-not-rendered *;
+execution-while-out-of-viewport *;
+fullscreen *;
+gamepad *;
+geolocation *;
+gyroscope *;
+hid *;
+identity-credentials-get *;
+idle-detection *;
+language-detector *;
+language-model *;
+layout-animations *;
+local-fonts *;
+local-network *;
+local-network-access *;
+loopback-network *;
+magnetometer *;
+microphone *;
+midi *;
+navigation-override *;
+on-device-speech-recognition *;
+otp-credentials *;
+oversized-images *;
+payment *;
+picture-in-picture *;
+private-state-token-issuance *;
+private-state-token-redemption *;
+publickey-credentials-create *;
+publickey-credentials-get *;
+screen-wake-lock *;
+serial *;
+speaker-selection *;
+storage-access *;
+summarizer *;
+sync-script *;
+sync-xhr *;
+translator *;
+unoptimized-images *;
+unsized-media *;
+usb *;
+vibrate *;
+wake-lock *;
+web-share *;
+window-management *;
+xr-spatial-tracking *;
+"></iframe>
+<!-- _________________________________________________________________________________________________ -->
+<div id="statusbar"></div>
+<!-- _________________________________________________________________________________________________ -->
+<script defer type="text/javascript" charset="UTF-8" loading="eager" lazyload="off" src="index.js"></script>
+<!-- _________________________________________________________________________________________________ -->
+</body>
+</html>

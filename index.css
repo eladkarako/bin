@@ -1,0 +1,106 @@
+@charset "UTF-8";
+
+html,body{
+  width    : 100vw;
+  height   : 100vh;
+  margin   : 0px;
+  padding  : 0px;
+  overflow : hidden;
+}
+
+:root,  :root::before,  :root::after{  box-sizing:border-box; border-collapse:collapse; border-spacing:0px;     }
+[id],   [id]::before,   [id]::after{   box-sizing:inherit;    border-collapse:inherit;  border-spacing:inherit; }
+
+:root{ font-size: 1.5vw;    font-family: 'Courier New', monospace; }
+[id]{  font-size: inherit;  font-family: inherit;                  }
+
+[id]{
+  border-radius : 2px;
+  border        : 1px dashed lightgray;
+  outline       : 1px none transparent;
+}
+
+[id="toolbar"]{   position:absolute;  top: 0vh;  left: 0vw;  width:100vw;  height:10vh;}
+[id="editor"]{    position:absolute;  top:10vh;  left: 0vw;  width: 50vw;  height:80vh;}
+[id="preview"]{   position:absolute;  top:10vh;  left:50vw;  width: 50vw;  height:80vh;}
+[id="statusbar"]{ position:absolute;  top:90vh;  left: 0vw;  width:100vw;  height:10vh;}
+
+[id="editor"],[id="preview"]{    overflow:scroll; }
+[id="toolbar"],[id="statusbar"]{ overflow:hidden; }
+
+[id="toolbar"],[id="statusbar"]{ 
+  text-align    : center;
+  align-content : center; 
+  line-height   : 1.5vw;
+}
+
+[id="toolbar"]{ 
+  user-select   : none;
+}
+
+
+/* replacing actual checkbox element, with a visually identical Unicode text in label. because it scales better. it relays on pure HTML click binding when label has "for=[id of input type checkbox]", for it to work it must use <input id../><label for></label> and not <label><input /></label> to be able to use + selector. */
+input[type="checkbox"]{display:none;}
+input[type="checkbox"]         + label::before{ display:inline-block;  color: var(--muted-text); content:"\2610\FE0E\00A0"; } /* Unicode. \2610 = "☐" (Ballot Box). \FE0E = Variation Selector-15 (VS15) to render as text instead of color emoji glyph. \00A0 = No-Break Space. */
+input[type="checkbox"]:checked + label::before{ display:inline-block;  color: var(--accent);     content:"\2611\FE0E\00A0"; } /* Unicode. \2610 = "☐" (Ballot Box). \FE0E = Variation Selector-15 (VS15) to render as text instead of color emoji glyph. \00A0 = No-Break Space. */
+
+
+:root{                                   --text-wrap: pre;    }
+:root:has([id="btn_text_wrap"]:checked){ --text-wrap: normal; }
+
+[id="editor"]{
+  word-break         : normal;
+  overflow-wrap      : break-word;
+  word-wrap          : break-word;
+  -webkit-line-break : after-white-space;
+  white-space        : var(--text-wrap);
+}
+
+:root{
+  color-scheme               : light;
+  --toolbar-background       : rgb(220, 228, 238);
+  --workspace-background     : rgb(244, 247, 250);
+  --editor-background        : rgb(232, 240, 247);
+  --preview-background       : rgb(250, 252, 253);
+  --statusbar-background     : rgb(224, 232, 240);
+  --border                   : rgb(116, 143, 166);
+  --soft-border              : rgb(190, 207, 220);
+  --text                     : rgb(35, 58, 76);
+  --muted-text               : rgb(91, 116, 135);
+  --accent                   : rgb(35, 131, 166);
+  --soft-accent              : rgb(103, 169, 195);
+  --highlight                : rgb(151, 108, 35);
+  --button-background        : rgb(236, 242, 247);
+  --button-hover-background  : rgb(211, 229, 239);
+  --button-active-background : rgb(192, 216, 229);
+}
+
+:root:has([id="btn_dark_mode"]:checked){
+  color-scheme               : dark;
+  --toolbar-background       : rgb(35, 49, 68);
+  --workspace-background     : rgb(27, 38, 54);
+  --editor-background        : rgb(31, 45, 63);
+  --preview-background       : rgb(42, 56, 74);
+  --statusbar-background     : rgb(32, 45, 62);
+  --border                   : rgb(83, 108, 135);
+  --soft-border              : rgb(58, 79, 103);
+  --text                     : rgb(211, 224, 235);
+  --muted-text               : rgb(153, 174, 193);
+  --accent                   : rgb(105, 196, 224);
+  --soft-accent              : rgb(73, 139, 167);
+  --highlight                : rgb(225, 190, 112);
+  --button-background        : rgb(48, 68, 91);
+  --button-hover-background  : rgb(63, 91, 117);
+  --button-active-background : rgb(39, 57, 78);
+}
+
+:root{              background-color: var(--workspace-background);     color: var(--text);                              }
+body{               background-color: transparent;                     color: inherit;                                  }
+[id="toolbar"]{     background-color: var(--toolbar-background);                                                        }
+[id="editor"]{      background-color: var(--editor-background);        color: var(--text); caret-color: var(--accent);  }
+[id="preview"]{     background-color: var(--preview-background);                                                        }
+[id="statusbar"]{   background-color: var(--statusbar-background);     color: var(--muted-text);                        }
+button{             background-color: var(--button-background);        color: var(--text);                              }
+button:hover{       background-color: var(--button-hover-background);  color: var(--accent);                            }
+button:active{      background-color: var(--button-active-background); color: var(--highlight);                         }
+button:focus-visible{  outline-color: var(--accent);                                                                       }
