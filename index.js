@@ -221,9 +221,18 @@ const btn_dark_mode_change = (ev)=>{ //just store the settings every change.
 btn_dark_mode.removeEventListener("change", btn_dark_mode_change, {capture:false, passive:true, once:false});
 btn_dark_mode.addEventListener(   "change", btn_dark_mode_change, {capture:false, passive:true, once:false});
 
-try{ //one time when page loads up, try restore last state.
-  btn_dark_mode.checked = ("true" === (localStorage.getItem("btn_dark_mode__is_checked") || "false"));
+let is_checked_storage_value = null;
+try{
+  is_checked_storage_value = localStorage.getItem("btn_dark_mode__is_checked");
 }catch(err){}
+
+if(null !== is_checked_storage_value){
+  btn_dark_mode.checked = "true" === is_checked_storage_value : is_user_prefers_dark_mode;
+}else{
+  const is_user_prefers_dark_mode = ((window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)")) || {"matches":false} ).matches; //query OS state of theme, fallback to false if not possible.
+  btn_dark_mode.checked = is_user_prefers_dark_mode; //query OS/browse theme, or theme preference, to better initialize the page's theme. not handled via more reasonable CSS, in-order to piggyback the user-interaction mechanism of checkbox for dark-mode. default/fallback to false ("light").
+  btn_dark_mode_change(); //manually trigger the function to save the data to storage, since it probably wasn't there..
+}
 
 
 
