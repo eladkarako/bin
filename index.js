@@ -227,7 +227,7 @@ try{
 }catch(err){}
 
 if(null !== is_checked_storage_value){
-  btn_dark_mode.checked = "true" === is_checked_storage_value : is_user_prefers_dark_mode;
+  btn_dark_mode.checked = ("true" === is_checked_storage_value) || is_user_prefers_dark_mode;
 }else{
   const is_user_prefers_dark_mode = ((window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)")) || {"matches":false} ).matches; //query OS state of theme, fallback to false if not possible.
   btn_dark_mode.checked = is_user_prefers_dark_mode; //query OS/browse theme, or theme preference, to better initialize the page's theme. not handled via more reasonable CSS, in-order to piggyback the user-interaction mechanism of checkbox for dark-mode. default/fallback to false ("light").
